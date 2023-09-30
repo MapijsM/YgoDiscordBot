@@ -1,0 +1,16 @@
+# Default ignored files
+/shelf/
+/workspace.xml
+# Datasource local storage ignored files
+/../../../../../../:\Users\Gebruiker\IdeaProjects\YugiohBot\.idea/dataSources/
+/dataSources.local.xml
+# Editor-based HTTP Client requests
+/httpRequests/
+
+.env
+build/
+target/
+.idea
+.gradle
+settings.gradle
+build.gradle
