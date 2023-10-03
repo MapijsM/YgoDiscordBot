@@ -14,3 +14,7 @@ target/
 .gradle
 settings.gradle
 build.gradle
+Javadoc/
+gradle/
+gradlew.bat
+gradlew

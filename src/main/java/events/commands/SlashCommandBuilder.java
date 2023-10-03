@@ -15,7 +15,7 @@ public class SlashCommandBuilder extends ListenerAdapter {
             event.deferReply().queue();
             String tempString = null;
             if (option != null) {
-                tempString = capitalizeString.getCapitalizedString(option.getAsString());
+                tempString = CapitalizeString.getCapitalizedString(option.getAsString());
             }
 
             //Build and fill embed TODO: make a separate method that does this.

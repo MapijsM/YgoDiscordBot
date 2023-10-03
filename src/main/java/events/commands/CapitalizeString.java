@@ -1,7 +1,7 @@
 package events.commands;
 
-public class capitalizeString {
-    static String getCapitalizedString(String stringToCapitalize) {
+public class CapitalizeString {
+    public static String getCapitalizedString(String stringToCapitalize) {
         String[] words = stringToCapitalize.split(" ");
         StringBuilder capitalizedString = new StringBuilder();
         for (String word : words) {

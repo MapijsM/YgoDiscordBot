@@ -1,5 +1,7 @@
 package Api;
 
+import Api.Model.Card;
+import Api.Model.Data;
 import com.google.gson.Gson;
 
 import java.io.IOException;
@@ -80,11 +82,7 @@ public class ApiRetriever {
         }
         for (Card card : cards) {
             System.out.println(
-                    "________________________________" + "\n" +
-                            "Name: " + card.getName() + "\n" +
-                            "card Type: " + card.getFrameType() + "\n" +
-                            "Monster attribute: " + card.getAttribute() + "\n" +
-                            "Card price: " + card.getCardPrices().get(0).getCardmarketPrice() + "\n"
+                    card
             );
         }
     }

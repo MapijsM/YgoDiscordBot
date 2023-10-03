@@ -1,4 +1,4 @@
-package Api;
+package Api.Model;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -72,6 +72,7 @@ public class Card {
     public Card() {
     }
 
+    //TODO: Make Abstract Card class and extend from there for each kind of possible card.
     public Card(Integer id, String name, String type, String frameType, String desc, Integer atk, Integer def, Integer level, String race, String attribute, String archetype, List<CardSet> cardSets, List<CardImage> cardImages, List<CardPrice> cardPrices) {
         //constructor: main deck,xyz,synchro,fusion monster
         this.id = id;
@@ -288,11 +289,34 @@ public class Card {
         this.cardImages = cardImages;
     }
 
-    public List<CardPrice> getCardPrices() {
-        return cardPrices;
-    }
+    public List<CardPrice> getCardPrices() { return cardPrices; }
 
-    public void setCardPrices(List<CardPrice> cardPrices) {
-        this.cardPrices = cardPrices;
+    public void setCardPrices(List<CardPrice> cardPrices) { this.cardPrices = cardPrices; }
+
+    @Override
+    public String toString() {
+        return "Card{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", type='" + type + '\'' +
+                ", frameType='" + frameType + '\'' +
+                ", desc='" + desc + '\'' +
+                ", pendDesc='" + pendDesc + '\'' +
+                ", monsterDesc='" + monsterDesc + '\'' +
+                ", atk=" + atk +
+                ", def=" + def +
+                ", level=" + level +
+                ", race='" + race + '\'' +
+                ", attribute='" + attribute + '\'' +
+                ", archetype='" + archetype + '\'' +
+                ", linkval=" + linkval +
+                ", linkmarkers=" + linkmarkers +
+                ", scale=" + scale +
+                ", cardSets=" + cardSets +
+                ", cardImages=" + cardImages +
+                ", cardPrices=" + cardPrices +
+                '}';
+
+
     }
 }
