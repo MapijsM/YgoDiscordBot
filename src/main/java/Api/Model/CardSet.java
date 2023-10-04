@@ -84,4 +84,14 @@ public class CardSet {
         this.setPrice = setPrice;
     }
 
+    @Override
+    public String toString() {
+        return "CardSet{" +
+                "setName='" + setName + '\'' +
+                ", setCode='" + setCode + '\'' +
+                ", setRarity='" + setRarity + '\'' +
+                ", setRarityCode='" + setRarityCode + '\'' +
+                ", setPrice='" + setPrice + '\'' +
+                '}';
+    }
 }

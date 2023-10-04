@@ -11,9 +11,9 @@ import net.dv8tion.jda.api.interactions.commands.build.OptionData;
 public enum CardParameter {
     NAME(OptionType.STRING,"Name or partial name of a card"),
     TYPE(OptionType.STRING, "Type of the card, you can enter multiple types separated with commas, e.g. (xyz monster,spell card)"),
-    ATK(OptionType.INTEGER, "Attack of a monster"),
-    DEF(OptionType.INTEGER, "Defence of a monster"),
-    LEVEl(OptionType.INTEGER, "Level of a monster"),
+    ATK(OptionType.STRING, "Attack of a monster, use <,>,<=,>= to indicate greater than or less than, respectively, e.g. >=3000"),
+    DEF(OptionType.STRING, "Defence of a monster, use <,>,<=,>= to indicate greater than or less than, respectively, e.g. >=3000"),
+    LEVEl(OptionType.STRING, "Level of a monster, use <,>,<=,>= to indicate greater than or less than, respectively, e.g. >=4"),
     RACE(OptionType.STRING, "Type of a monster. You can enter multiple types separated with commas, e.g. (Spellcaster,Warrior)"),
     ATTRIBUTE(OptionType.STRING, "Attribute of a monster. You can enter multiple attributes separated with commas, e.g. " +
             "Light,Dark"),

@@ -70,79 +70,7 @@ public class Card {
      * No args constructor for use in serialization
      */
     public Card() {
-    }
 
-    //TODO: Make Abstract Card class and extend from there for each kind of possible card.
-    public Card(Integer id, String name, String type, String frameType, String desc, Integer atk, Integer def, Integer level, String race, String attribute, String archetype, List<CardSet> cardSets, List<CardImage> cardImages, List<CardPrice> cardPrices) {
-        //constructor: main deck,xyz,synchro,fusion monster
-        this.id = id;
-        this.name = name;
-        this.type = type;
-        this.frameType = frameType;
-        this.desc = desc;
-        this.atk = atk;
-        this.def = def;
-        this.level = level;
-        this.race = race;
-        this.attribute = attribute;
-        this.archetype = archetype;
-        this.cardSets = cardSets;
-        this.cardImages = cardImages;
-        this.cardPrices = cardPrices;
-    }
-
-
-    public Card(Integer id, String name, String type, String frameType, String desc, Integer atk, String race, String attribute, Integer linkval, List<String> linkmarkers, List<CardSet> cardSets, List<CardImage> cardImages, List<CardPrice> cardPrices) {
-        //constructor: link monster
-        this.id = id;
-        this.name = name;
-        this.type = type;
-        this.frameType = frameType;
-        this.desc = desc;
-        this.atk = atk;
-        this.race = race;
-        this.attribute = attribute;
-        this.linkval = linkval;
-        this.linkmarkers = linkmarkers;
-        this.cardSets = cardSets;
-        this.cardImages = cardImages;
-        this.cardPrices = cardPrices;
-    }
-
-    public Card(Integer id, String name, String type, String frameType, String desc, String pendDesc, String monsterDesc, Integer atk, Integer def, Integer level, String race, String attribute, String archetype, Integer scale, List<CardSet> cardSets, List<CardImage> cardImages, List<CardPrice> cardPrices) {
-        //constructor: pendulum monster
-        this.id = id;
-        this.name = name;
-        this.type = type;
-        this.frameType = frameType;
-        this.desc = desc;
-        this.pendDesc = pendDesc;
-        this.monsterDesc = monsterDesc;
-        this.atk = atk;
-        this.def = def;
-        this.level = level;
-        this.race = race;
-        this.attribute = attribute;
-        this.archetype = archetype;
-        this.scale = scale;
-        this.cardSets = cardSets;
-        this.cardImages = cardImages;
-        this.cardPrices = cardPrices;
-    }
-
-
-    public Card(Integer id, String name, String type, String frameType, String desc, String race, List<CardSet> cardSets, List<CardImage> cardImages, List<CardPrice> cardPrices, String archetype) {
-        //Constructor: spell/trap
-        this.id = id;
-        this.name = name;
-        this.type = type;
-        this.frameType = frameType;
-        this.desc = desc;
-        this.race = race;
-        this.cardSets = cardSets;
-        this.cardImages = cardImages;
-        this.cardPrices = cardPrices;
-        this.archetype = archetype;
     }
 
     public Integer getId() {

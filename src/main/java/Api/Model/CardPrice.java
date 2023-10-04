@@ -83,4 +83,14 @@ public class CardPrice {
         this.coolstuffincPrice = coolstuffincPrice;
     }
 
+    @Override
+    public String toString() {
+        return "CardPrice{" +
+                "cardmarketPrice='" + cardmarketPrice + '\'' +
+                ", tcgplayerPrice='" + tcgplayerPrice + '\'' +
+                ", ebayPrice='" + ebayPrice + '\'' +
+                ", amazonPrice='" + amazonPrice + '\'' +
+                ", coolstuffincPrice='" + coolstuffincPrice + '\'' +
+                '}';
+    }
 }
