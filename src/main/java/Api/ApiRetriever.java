@@ -45,7 +45,7 @@ public class ApiRetriever {
 
 
         //TODO: remove unnecessary printing the response time
-        
+
         // Measure the time taken for the HTTP request and response
         long startTime = System.nanoTime();
         HttpResponse<String> getResponse = httpClient.send(getRequest, HttpResponse.BodyHandlers.ofString());
@@ -76,7 +76,12 @@ public class ApiRetriever {
     public ArrayList<Card> convertJsonToCard(HttpResponse<String> response) {
         Gson gson = new Gson();
         Data data = gson.fromJson(response.body(), Data.class);
-        return new ArrayList<Card>(data.getData());
+        if(data.getData() == null){
+            return new ArrayList<Card>();
+        }else {
+            return new ArrayList<Card>(data.getData());
+        }
+
     }
 
     /**
@@ -132,8 +137,7 @@ public class ApiRetriever {
             parameters.deleteCharAt(parameters.length() - 1);
         }
         HttpResponse<String> response = getHttpFromApi(parameters.toString());
-        List<Card> cards = convertJsonToCard(response);
-        return cards;
+        return convertJsonToCard(response);
 
     }
     /**

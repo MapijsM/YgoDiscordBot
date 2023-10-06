@@ -13,7 +13,6 @@ import net.dv8tion.jda.api.requests.GatewayIntent;
 public class DiscordBot {
 
 public void makeCommands() throws InterruptedException {
-    //TODO: make separate methods for guild or global commands. Or should I not make them separate and just use an if statement?
     JDA jda = JDABuilder.createDefault(System.getenv("DISCORD_BOT_API_KEY"))
             .enableIntents(GatewayIntent.MESSAGE_CONTENT)
             .addEventListeners(new SlashCommandListener())
