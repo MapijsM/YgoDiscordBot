@@ -26,8 +26,8 @@ public class ApiRetriever {
      *
      * @param param The query parameters to be appended to the API endpoint.
      * @return An HttpResponse containing the response from the API.
-     * @throws URISyntaxException If there is an issue with the URI construction.
-     * @throws IOException      If an I/O error occurs during the HTTP request.
+     * @throws URISyntaxException   If there is an issue with the URI construction.
+     * @throws IOException          If an I/O error occurs during the HTTP request.
      * @throws InterruptedException If the HTTP request is interrupted.
      */
     public HttpResponse<String> getHttpFromApi(String param) throws URISyntaxException, IOException, InterruptedException {
@@ -58,8 +58,8 @@ public class ApiRetriever {
         int statusCode = getResponse.statusCode();
         if (statusCode != 200) {
             // Handle the case where an error occurred and print the error code and response body
-            System.out.println("An error has occurred, please read the error code below to figure out what happened. \n"+
-            getResponse.body());
+            System.out.println("An error has occurred, please read the error code below to figure out what happened. \n" +
+                    getResponse.body());
             return getResponse;
         }
 
@@ -76,9 +76,9 @@ public class ApiRetriever {
     public ArrayList<Card> convertJsonToCard(HttpResponse<String> response) {
         Gson gson = new Gson();
         Data data = gson.fromJson(response.body(), Data.class);
-        if(data.getData() == null){
+        if (data.getData() == null) {
             return new ArrayList<Card>();
-        }else {
+        } else {
             return new ArrayList<Card>(data.getData());
         }
 
@@ -87,21 +87,21 @@ public class ApiRetriever {
     /**
      * Retrieves a list of cards based on specified search criteria.
      *
-     * @param name      The name of the card to search for (nullable).
-     * @param type      The type of the card (nullable).
-     * @param atk       The attack points of the card (nullable).
-     * @param def       The defense points of the card (nullable).
-     * @param level     The level of the card (nullable).
-     * @param race      The race of the card (nullable).
-     * @param attribute The attribute of the card (nullable).
-     * @param link      The link value of the card (nullable).
+     * @param name       The name of the card to search for (nullable).
+     * @param type       The type of the card (nullable).
+     * @param atk        The attack points of the card (nullable).
+     * @param def        The defense points of the card (nullable).
+     * @param level      The level of the card (nullable).
+     * @param race       The race of the card (nullable).
+     * @param attribute  The attribute of the card (nullable).
+     * @param link       The link value of the card (nullable).
      * @param linkMarker The link marker of the card (nullable).
-     * @param scale     The scale value of the card (nullable).
-     * @param cardSet   The card set information (nullable).
-     * @param archetype The archetype of the card (nullable).
-     * @throws InterruptedException   If the operation is interrupted.
-     * @throws IOException            If an I/O error occurs.
-     * @throws URISyntaxException     If a URI syntax error occurs.
+     * @param scale      The scale value of the card (nullable).
+     * @param cardSet    The card set information (nullable).
+     * @param archetype  The archetype of the card (nullable).
+     * @throws InterruptedException If the operation is interrupted.
+     * @throws IOException          If an I/O error occurs.
+     * @throws URISyntaxException   If a URI syntax error occurs.
      */
     public List<Card> getCards(
             @Nullable String name,
@@ -140,12 +140,13 @@ public class ApiRetriever {
         return convertJsonToCard(response);
 
     }
+
     /**
      * Appends a query parameter to the StringBuilder if the parameter value is not null.
      *
-     * @param parameters  The StringBuilder to which the parameter is appended.
-     * @param paramName   The name of the parameter.
-     * @param paramValue  The value of the parameter (nullable).
+     * @param parameters The StringBuilder to which the parameter is appended.
+     * @param paramName  The name of the parameter.
+     * @param paramValue The value of the parameter (nullable).
      * @throws UnsupportedEncodingException If URL encoding fails.
      */
     private void appendQueryParam(StringBuilder parameters, String paramName, String paramValue) throws UnsupportedEncodingException {
@@ -160,14 +161,26 @@ public class ApiRetriever {
     /**
      * Appends a query parameter with a comparison prefix to the StringBuilder if the parameter value is not null.
      *
-     * @param parameters  The StringBuilder to which the parameter is appended.
-     * @param paramName   The name of the parameter.
-     * @param paramValue  The value of the parameter (nullable).
+     * @param parameters The StringBuilder to which the parameter is appended.
+     * @param paramName  The name of the parameter.
+     * @param paramValue The value of the parameter (nullable).
      * @throws UnsupportedEncodingException If URL encoding fails.
      */
     private void appendQueryParamWithComparison(StringBuilder parameters, String paramName, String paramValue) throws UnsupportedEncodingException {
         if (paramValue != null) {
-            if (paramValue.startsWith(">")) {
+            if (paramValue.startsWith(">=")) {
+                parameters.append(paramName)
+                        .append("=")
+                        .append("gte")
+                        .append(URLEncoder.encode(paramValue.substring(2), StandardCharsets.UTF_8))
+                        .append("&");
+            } else if (paramValue.startsWith("<=")) {
+                parameters.append(paramName)
+                        .append("=")
+                        .append("lte")
+                        .append(URLEncoder.encode(paramValue.substring(2), StandardCharsets.UTF_8))
+                        .append("&");
+            } else if (paramValue.startsWith(">")) {
                 parameters.append(paramName)
                         .append("=")
                         .append("gt")
@@ -179,25 +192,11 @@ public class ApiRetriever {
                         .append("lt")
                         .append(URLEncoder.encode(paramValue.substring(1), StandardCharsets.UTF_8))
                         .append("&");
-            }else if (paramValue.startsWith(">=")) {
-                    parameters.append(paramName)
-                            .append("=")
-                            .append("gte")
-                            .append(URLEncoder.encode(paramValue.substring(1), StandardCharsets.UTF_8))
-                            .append("&");
-                } else if (paramValue.startsWith("<=")) {
-                    parameters.append(paramName)
-                            .append("=")
-                            .append("lte")
-                            .append(URLEncoder.encode(paramValue.substring(1), StandardCharsets.UTF_8))
-                            .append("&");
             } else {
                 appendQueryParam(parameters, paramName, paramValue);
             }
         }
     }
-
-
 
 
     /**
@@ -236,7 +235,7 @@ public class ApiRetriever {
         String archetype = null;
 
         ApiRetriever instance = new ApiRetriever();  // create instance of the class
-        instance.getCards(name,type,atk,def,level,race,attribute,link,linkMarker,scale,cardSet,archetype);
+        instance.getCards(name, type, atk, def, level, race, attribute, link, linkMarker, scale, cardSet, archetype);
 
 
     }
