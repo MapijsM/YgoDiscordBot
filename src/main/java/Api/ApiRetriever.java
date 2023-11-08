@@ -136,7 +136,10 @@ public class ApiRetriever {
         if (parameters.length() > 1) {
             parameters.deleteCharAt(parameters.length() - 1);
         }
+        //TODO: take out any souts
+        System.out.println(parameters.toString());
         HttpResponse<String> response = getHttpFromApi(parameters.toString());
+        System.out.println(response);
         return convertJsonToCard(response);
 
     }
@@ -149,11 +152,21 @@ public class ApiRetriever {
      * @param paramValue The value of the parameter (nullable).
      * @throws UnsupportedEncodingException If URL encoding fails.
      */
-    private void appendQueryParam(StringBuilder parameters, String paramName, String paramValue) throws UnsupportedEncodingException {
+    private void appendQueryParam(StringBuilder parameters, String paramName, String paramValue) {
         if (paramValue != null) {
+            StringBuilder encodedValue = new StringBuilder();
+            for (char c : paramValue.toCharArray()) {
+                if (c == ' ') {
+                    encodedValue.append(URLEncoder.encode(String.valueOf(c), StandardCharsets.UTF_8));
+                } else {
+                    // Encode all other characters
+                    encodedValue.append(c);
+                }
+            }
+
             parameters.append(paramName)
                     .append("=")
-                    .append(URLEncoder.encode(paramValue, StandardCharsets.UTF_8))
+                    .append(encodedValue.toString())
                     .append("&");
         }
     }
@@ -217,6 +230,25 @@ public class ApiRetriever {
                     card
             );
         }
+    }
+
+
+    /**
+     * TODO: UNFINISHED CODE USING THE CARD USAGE PAGE.
+     * only percentage of first 200 cards of each format.
+     * So how to rank cards based on this, if possible?
+     * add getUsage and have it either percentage or null?
+     * if getUsage != null,
+     *
+     */
+    public void getCardUsage(){
+        String tcgRanking = "https://ygoprodeck.com/api/top/getFormat.php?format=Tournament%20Meta%20Decks&timeRange=format";
+        String ocgRanking = "https://ygoprodeck.com/api/top/getFormat.php?format=Tournament%20Meta%20Decks%20OCG&timeRange=format";
+        String metaRanking = "https://ygoprodeck.com/api/top/getFormat.php?format=Meta%20Decks&timeRange=format";
+        String masterDuelRanking = "https://ygoprodeck.com/api/top/getFormat.php?format=Master%20Duel%20Decks&timeRange=format";
+        String nonMetaRanking = "https://ygoprodeck.com/api/top/getFormat.php?format=Non-Meta%20Decks&timeRange=format";
+        String goatRanking = "https://ygoprodeck.com/api/top/getFormat.php?format=Goat%20Format%20Decks&timeRange=format";
+        String EdisonRanking = "https://ygoprodeck.com/api/top/getFormat.php?format=Edison%20Format%20Decks&timeRange=format";
     }
 
     public static void main(String[] args) throws URISyntaxException, IOException, InterruptedException {

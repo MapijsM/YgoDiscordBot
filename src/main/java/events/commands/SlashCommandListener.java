@@ -34,11 +34,11 @@ public class SlashCommandListener extends ListenerAdapter {
             String race = event.getOption("race", OptionMapping::getAsString);
             String attribute = event.getOption("attribute", OptionMapping::getAsString);
             Integer link = event.getOption("link", OptionMapping::getAsInt);
-            String linkMarker = event.getOption("linkMarker", OptionMapping::getAsString);
+            String linkMarker = event.getOption("linkmarker", OptionMapping::getAsString);
             Integer scale = event.getOption("scale", OptionMapping::getAsInt);
-            String cardSet = event.getOption("cardSet", OptionMapping::getAsString);
+            String cardSet = event.getOption("cardset", OptionMapping::getAsString);
             String archetype = event.getOption("archetype", OptionMapping::getAsString);
-
+            System.out.println(event.getInteraction().getUser());
             event.deferReply().queue();
             EmbedBuilder errorEb = new EmbedBuilder();
             //If all variables are null, give user the Usage guide.
@@ -75,8 +75,8 @@ public class SlashCommandListener extends ListenerAdapter {
                     String relativeTargetFolder = "src/main/resources/images/images_normal/";
                     String currentWorkingDirectory = System.getProperty("user.dir");
                     for (int i = 0; i < result.size() && i <= 4; i++) {
-                        EmbedBuilder ebCounter = new EmbedBuilder();
                         EmbedBuilder eb = new EmbedBuilder();
+                        EmbedBuilder ebCounter = new EmbedBuilder();
                         try {
                             // Create the target folder if it doesn't exist
                             Path targetFolderPath = Paths.get(currentWorkingDirectory, relativeTargetFolder);
@@ -109,161 +109,181 @@ public class SlashCommandListener extends ListenerAdapter {
                             eb.setTitle(result.get(i).getName());
                             eb.setImage("attachment://card.jpg");
                             //If,else if logic depending on the card type.
-                            if (result.get(i).getFrameType().equals("spell")) {
-                                eb.addField("Card information",
-                                        result.get(i).getType() + "\n" +
-                                                "Type of spell card: " + result.get(i).getRace() + "\n" +
-                                                "Effect: " + "\n" + result.get(i).getDesc() + "\n" + "\n" +
-                                                "Cheapest version on cardmarket: " + "\u20ac" + result.get(i).getCardPrices().get(0).getCardmarketPrice()
-                                        , true);
-                                Color spellColor = new Color(22, 128, 120, 255);
-                                eb.setColor(spellColor);
-                            } else if (result.get(i).getFrameType().equals("trap")) {
-                                if (result.get(i).getRace() == null) {
-                                    result.get(i).setRace("normal");
+                            switch (result.get(i).getFrameType()) {
+                                case "spell":
+                                    eb.addField("Card information",
+                                            result.get(i).getType() + "\n" +
+                                                    "Type of spell card: " + result.get(i).getRace() + "\n" +
+                                                    "Effect: " + "\n" + result.get(i).getDesc() + "\n" + "\n" +
+                                                    "Cheapest version on cardmarket: " + "\u20ac" + result.get(i).getCardPrices().get(0).getCardmarketPrice()
+                                            , true);
+                                    Color spellColor = new Color(22, 128, 120, 255);
+                                    eb.setColor(spellColor);
+                                    break;
+                                case "trap":
+                                    if (result.get(i).getRace() == null) {
+                                        result.get(i).setRace("normal");
+                                    }
+                                    eb.addField("Card information",
+                                            result.get(i).getType() + "\n" +
+                                                    "Type of trap card: " + result.get(i).getRace() + "\n" +
+                                                    "Effect: " + "\n" + result.get(i).getDesc() + "\n" + "\n" +
+                                                    "Cheapest version on cardmarket: " + "\u20ac" + result.get(i).getCardPrices().get(0).getCardmarketPrice()
+                                            , true);
+                                    Color trapColor = new Color(155, 42, 114, 255);
+                                    eb.setColor(trapColor);
+                                    break;
+                                case "effect":
+                                    eb.addField("Card information",
+                                            result.get(i).getType() + "\n" +
+                                                    "Level: " + result.get(i).getLevel().toString() + "\n" +
+                                                    "Attribute: " + result.get(i).getAttribute() + "\n" +
+                                                    "Type: " + result.get(i).getRace() + "\n" +
+                                                    "Effect: " + "\n" + result.get(i).getDesc() + "\n" +
+                                                    "Attack: " + result.get(i).getAtk() + "\n" +
+                                                    "Defence: " + result.get(i).getDef() + "\n" + "\n" +
+                                                    "Cheapest version on cardmarket: " + "\u20ac" + result.get(i).getCardPrices().get(0).getCardmarketPrice()
+                                            , true);
+                                    Color effectColor = new Color(185, 134, 115, 255);
+                                    eb.setColor(effectColor);
+                                    break;
+                                case "ritual":
+                                    eb.addField("Card information",
+                                            result.get(i).getType() + "\n" +
+                                                    "Level: " + result.get(i).getLevel().toString() + "\n" +
+                                                    "Attribute: " + result.get(i).getAttribute() + "\n" +
+                                                    "Type: " + result.get(i).getRace() + "\n" +
+                                                    "Effect: " + "\n" + result.get(i).getDesc() + "\n" +
+                                                    "Attack: " + result.get(i).getAtk() + "\n" +
+                                                    "Defence: " + result.get(i).getDef() + "\n" + "\n" +
+                                                    "Cheapest version on cardmarket: " + "\u20ac" + result.get(i).getCardPrices().get(0).getCardmarketPrice()
+                                            , true);
+                                    Color ritualColor = new Color(102, 134, 195, 255);
+                                    eb.setColor(ritualColor);
+                                    break;
+                                case "normal":
+                                    eb.addField("Card information",
+                                            result.get(i).getType() + "\n" +
+                                                    "Level: " + result.get(i).getLevel().toString() + "\n" +
+                                                    "Attribute: " + result.get(i).getAttribute() + "\n" +
+                                                    "Type: " + result.get(i).getRace() + "\n" +
+                                                    "Effect: " + "\n" + result.get(i).getDesc() + "\n" +
+                                                    "Attack: " + result.get(i).getAtk() + "\n" +
+                                                    "Defence: " + result.get(i).getDef() + "\n" + "\n" +
+                                                    "Cheapest version on cardmarket: " + "\u20ac" + result.get(i).getCardPrices().get(0).getCardmarketPrice()
+                                            , true);
+                                    Color normalColor = new Color(208, 159, 66, 255);
+                                    eb.setColor(normalColor);
+                                    break;
+                                case "xyz": {
+                                    eb.addField("Card information",
+                                            result.get(i).getType() + "\n" +
+                                                    "Rank: " + result.get(i).getLevel().toString() + "\n" +
+                                                    "Attribute: " + result.get(i).getAttribute() + "\n" +
+                                                    "Type: " + result.get(i).getRace() + "\n" +
+                                                    "Effect: " + "\n" + result.get(i).getDesc() + "\n" +
+                                                    "Attack: " + result.get(i).getAtk() + "\n" +
+                                                    "Defence: " + result.get(i).getDef() + "\n" + "\n" +
+                                                    "Cheapest version on cardmarket: " + "\u20ac" + result.get(i).getCardPrices().get(0).getCardmarketPrice()
+                                            , true);
+                                    Color xyzColor = new Color(29, 19, 30, 255);
+                                    eb.setColor(xyzColor);
+                                    break;
                                 }
-                                eb.addField("Card information",
-                                        result.get(i).getType() + "\n" +
-                                                "Type of trap card: " + result.get(i).getRace() + "\n" +
-                                                "Effect: " + "\n" + result.get(i).getDesc() + "\n" + "\n" +
-                                                "Cheapest version on cardmarket: " + "\u20ac" + result.get(i).getCardPrices().get(0).getCardmarketPrice()
-                                        , true);
-                                Color trapColor = new Color(155, 42, 114, 255);
-                                eb.setColor(trapColor);
-                            } else if (result.get(i).getFrameType().equals("effect")) {
-                                eb.addField("Card information",
-                                        result.get(i).getType() + "\n" +
-                                                "Level: " + result.get(i).getLevel().toString() + "\n" +
-                                                "Attribute: " + result.get(i).getAttribute() + "\n" +
-                                                "Type: " + result.get(i).getRace() + "\n" +
-                                                "Effect: " + "\n" + result.get(i).getDesc() + "\n" +
-                                                "Attack: " + result.get(i).getAtk() + "\n" +
-                                                "Defence: " + result.get(i).getDef() + "\n" + "\n" +
-                                                "Cheapest version on cardmarket: " + "\u20ac" + result.get(i).getCardPrices().get(0).getCardmarketPrice()
-                                        , true);
-                                Color effectColor = new Color(185, 134, 115, 255);
-                                eb.setColor(effectColor);
-                            } else if (result.get(i).getFrameType().equals("ritual")) {
-                                eb.addField("Card information",
-                                        result.get(i).getType() + "\n" +
-                                                "Level: " + result.get(i).getLevel().toString() + "\n" +
-                                                "Attribute: " + result.get(i).getAttribute() + "\n" +
-                                                "Type: " + result.get(i).getRace() + "\n" +
-                                                "Effect: " + "\n" + result.get(i).getDesc() + "\n" +
-                                                "Attack: " + result.get(i).getAtk() + "\n" +
-                                                "Defence: " + result.get(i).getDef() + "\n" + "\n" +
-                                                "Cheapest version on cardmarket: " + "\u20ac" + result.get(i).getCardPrices().get(0).getCardmarketPrice()
-                                        , true);
-                                Color ritualColor = new Color(102, 134, 195, 255);
-                                eb.setColor(ritualColor);
-                            } else if (result.get(i).getFrameType().equals("normal")) {
-                                eb.addField("Card information",
-                                        result.get(i).getType() + "\n" +
-                                                "Level: " + result.get(i).getLevel().toString() + "\n" +
-                                                "Attribute: " + result.get(i).getAttribute() + "\n" +
-                                                "Type: " + result.get(i).getRace() + "\n" +
-                                                "Effect: " + "\n" + result.get(i).getDesc() + "\n" +
-                                                "Attack: " + result.get(i).getAtk() + "\n" +
-                                                "Defence: " + result.get(i).getDef() + "\n" + "\n" +
-                                                "Cheapest version on cardmarket: " + "\u20ac" + result.get(i).getCardPrices().get(0).getCardmarketPrice()
-                                        , true);
-                                Color normalColor = new Color(208, 159, 66, 255);
-                                eb.setColor(normalColor);
-                            } else if (result.get(i).getFrameType().equals("xyz")) {
-                                eb.addField("Card information",
-                                        result.get(i).getType() + "\n" +
-                                                "Rank: " + result.get(i).getLevel().toString() + "\n" +
-                                                "Attribute: " + result.get(i).getAttribute() + "\n" +
-                                                "Type: " + result.get(i).getRace() + "\n" +
-                                                "Effect: " + "\n" + result.get(i).getDesc() + "\n" +
-                                                "Attack: " + result.get(i).getAtk() + "\n" +
-                                                "Defence: " + result.get(i).getDef() + "\n" + "\n" +
-                                                "Cheapest version on cardmarket: " + "\u20ac" + result.get(i).getCardPrices().get(0).getCardmarketPrice()
-                                        , true);
-                                Color xyzColor = new Color(29, 19, 30, 255);
-                                eb.setColor(xyzColor);
-                            } else if (result.get(i).getFrameType().equals("normal_pendulum") || result.get(i).getFrameType().equals("effect_pendulum") || result.get(i).getFrameType().equals("ritual_pendulum") || result.get(i).getFrameType().equals("fusion_pendulum") || result.get(i).getFrameType().equals("synchro_pendulum")) {
-                                eb.addField("Card information",
-                                        result.get(i).getType() + "\n" +
-                                                "Level: " + result.get(i).getLevel().toString() + "\n" +
-                                                "Attribute: " + result.get(i).getAttribute() + "\n" +
-                                                "Type: " + result.get(i).getRace() + "\n" +
-                                                "Scale: " + result.get(i).getScale() + "\n" +
-                                                "Effect: " + "\n" + result.get(i).getMonsterDesc() + "\n" +
-                                                "Pendulum effect: " + "\n" + result.get(i).getPendDesc() + "\n" +
-                                                "Attack: " + result.get(i).getAtk() + "\n" +
-                                                "Defence: " + result.get(i).getDef() + "\n" + "\n" +
-                                                "Cheapest version on cardmarket: " + "\u20ac" + result.get(i).getCardPrices().get(0).getCardmarketPrice()
-                                        , true);
-                                Color pendulumColor = new Color(117, 125, 112, 255);
-                                eb.setColor(pendulumColor);
-                            } else if (result.get(i).getFrameType().equals("fusion")) {
-                                eb.addField("Card information",
-                                        result.get(i).getType() + "\n" +
-                                                "Level: " + result.get(i).getLevel().toString() + "\n" +
-                                                "Attribute: " + result.get(i).getAttribute() + "\n" +
-                                                "Type: " + result.get(i).getRace() + "\n" +
-                                                "Effect: " + "\n" + result.get(i).getDesc() + "\n" +
-                                                "Attack: " + result.get(i).getAtk() + "\n" +
-                                                "Defence: " + result.get(i).getDef() + "\n" + "\n" +
-                                                "Cheapest version on cardmarket: " + "\u20ac" + result.get(i).getCardPrices().get(0).getCardmarketPrice()
-                                        , true);
-                                Color fusionColor = new Color(137, 76, 170, 255);
-                                eb.setColor(fusionColor);
-                            } else if (result.get(i).getFrameType().equals("synchro")) {
-                                eb.addField("Card information",
-                                        result.get(i).getType() + "\n" +
-                                                "Level: " + result.get(i).getLevel().toString() + "\n" +
-                                                "Attribute: " + result.get(i).getAttribute() + "\n" +
-                                                "Type: " + result.get(i).getRace() + "\n" +
-                                                "Effect: " + "\n" + result.get(i).getDesc() + "\n" +
-                                                "Attack: " + result.get(i).getAtk() + "\n" +
-                                                "Defence: " + result.get(i).getDef() + "\n" + "\n" +
-                                                "Cheapest version on cardmarket: " + "\u20ac" + result.get(i).getCardPrices().get(0).getCardmarketPrice()
-                                        , true);
-                                Color synchroColor = new Color(232, 228, 225, 255);
-                                eb.setColor(synchroColor);
-                            } else if (result.get(i).getFrameType().equals("link")) {
-                                eb.addField("Card information",
-                                        result.get(i).getType() + "\n" +
-                                                "Link: " + result.get(i).getLinkval().toString() + "\n" +
-                                                "Link: " + result.get(i).getLinkmarkers().toString() + "\n" +
-                                                "Attribute: " + result.get(i).getAttribute() + "\n" +
-                                                "Type: " + result.get(i).getRace() + "\n" +
-                                                "Effect: " + "\n" + result.get(i).getDesc() + "\n" +
-                                                "Attack: " + result.get(i).getAtk() + "\n" + "\n" +
-                                                "Cheapest version on cardmarket: " + "\u20ac" + result.get(i).getCardPrices().get(0).getCardmarketPrice()
-                                        , true);
-                                Color linkColor = new Color(1, 108, 178, 255);
-                                eb.setColor(linkColor);
-                            } else if (result.get(i).getFrameType().equals("xyz_pendulum")) {
-                                eb.addField("Card information",
-                                        result.get(i).getType() + "\n" +
-                                                "Rank: " + result.get(i).getLevel().toString() + "\n" +
-                                                "Attribute: " + result.get(i).getAttribute() + "\n" +
-                                                "Type: " + result.get(i).getRace() + "\n" +
-                                                "Scale: " + result.get(i).getScale() + "\n" +
-                                                "Effect: " + "\n" + result.get(i).getMonsterDesc() + "\n" +
-                                                "Pendulum effect: " + "\n" + result.get(i).getPendDesc() + "\n" +
-                                                "Attack: " + result.get(i).getAtk() + "\n" +
-                                                "Defence: " + result.get(i).getDef() + "\n" + "\n" +
-                                                "Cheapest version on cardmarket: " + "\u20ac" + result.get(i).getCardPrices().get(0).getCardmarketPrice()
-                                        , true);
-                                Color xyzColor = new Color(29, 19, 30, 255);
-                                eb.setColor(xyzColor);
-                            } else if (result.get(i).getFrameType().equals("token")) {
-                                eb.addField("Card information",
-                                        result.get(i).getType() + "\n" +
-                                                "Level: " + result.get(i).getLevel().toString() + "\n" +
-                                                "Attribute: " + result.get(i).getAttribute() + "\n" +
-                                                "Type: " + result.get(i).getRace() + "\n" +
-                                                "Effect: " + "\n" + result.get(i).getDesc() + "\n" +
-                                                "Attack: " + result.get(i).getAtk() + "\n" +
-                                                "Defence: " + result.get(i).getDef() + "\n" + "\n" +
-                                                "Cheapest version on cardmarket: " + "\u20ac" + result.get(i).getCardPrices().get(0).getCardmarketPrice()
-                                        , true);
-                                Color xyzColor = new Color(29, 19, 30, 255);
-                                eb.setColor(xyzColor);
+                                case "normal_pendulum":
+                                case "effect_pendulum":
+                                case "ritual_pendulum":
+                                case "fusion_pendulum":
+                                case "synchro_pendulum":
+                                    eb.addField("Card information",
+                                            result.get(i).getType() + "\n" +
+                                                    "Level: " + result.get(i).getLevel().toString() + "\n" +
+                                                    "Attribute: " + result.get(i).getAttribute() + "\n" +
+                                                    "Type: " + result.get(i).getRace() + "\n" +
+                                                    "Scale: " + result.get(i).getScale() + "\n" +
+                                                    "Effect: " + "\n" + result.get(i).getMonsterDesc() + "\n" +
+                                                    "Pendulum effect: " + "\n" + result.get(i).getPendDesc() + "\n" +
+                                                    "Attack: " + result.get(i).getAtk() + "\n" +
+                                                    "Defence: " + result.get(i).getDef() + "\n" + "\n" +
+                                                    "Cheapest version on cardmarket: " + "\u20ac" + result.get(i).getCardPrices().get(0).getCardmarketPrice()
+                                            , true);
+                                    Color pendulumColor = new Color(117, 125, 112, 255);
+                                    eb.setColor(pendulumColor);
+                                    break;
+                                case "fusion":
+                                    eb.addField("Card information",
+                                            result.get(i).getType() + "\n" +
+                                                    "Level: " + result.get(i).getLevel().toString() + "\n" +
+                                                    "Attribute: " + result.get(i).getAttribute() + "\n" +
+                                                    "Type: " + result.get(i).getRace() + "\n" +
+                                                    "Effect: " + "\n" + result.get(i).getDesc() + "\n" +
+                                                    "Attack: " + result.get(i).getAtk() + "\n" +
+                                                    "Defence: " + result.get(i).getDef() + "\n" + "\n" +
+                                                    "Cheapest version on cardmarket: " + "\u20ac" + result.get(i).getCardPrices().get(0).getCardmarketPrice()
+                                            , true);
+                                    Color fusionColor = new Color(137, 76, 170, 255);
+                                    eb.setColor(fusionColor);
+                                    break;
+                                case "synchro":
+                                    eb.addField("Card information",
+                                            result.get(i).getType() + "\n" +
+                                                    "Level: " + result.get(i).getLevel().toString() + "\n" +
+                                                    "Attribute: " + result.get(i).getAttribute() + "\n" +
+                                                    "Type: " + result.get(i).getRace() + "\n" +
+                                                    "Effect: " + "\n" + result.get(i).getDesc() + "\n" +
+                                                    "Attack: " + result.get(i).getAtk() + "\n" +
+                                                    "Defence: " + result.get(i).getDef() + "\n" + "\n" +
+                                                    "Cheapest version on cardmarket: " + "\u20ac" + result.get(i).getCardPrices().get(0).getCardmarketPrice()
+                                            , true);
+                                    Color synchroColor = new Color(232, 228, 225, 255);
+                                    eb.setColor(synchroColor);
+                                    break;
+                                case "link":
+                                    eb.addField("Card information",
+                                            result.get(i).getType() + "\n" +
+                                                    "Link: " + result.get(i).getLinkval().toString() + "\n" +
+                                                    "Link: " + result.get(i).getLinkmarkers().toString() + "\n" +
+                                                    "Attribute: " + result.get(i).getAttribute() + "\n" +
+                                                    "Type: " + result.get(i).getRace() + "\n" +
+                                                    "Effect: " + "\n" + result.get(i).getDesc() + "\n" +
+                                                    "Attack: " + result.get(i).getAtk() + "\n" + "\n" +
+                                                    "Cheapest version on cardmarket: " + "\u20ac" + result.get(i).getCardPrices().get(0).getCardmarketPrice()
+                                            , true);
+                                    Color linkColor = new Color(1, 108, 178, 255);
+                                    eb.setColor(linkColor);
+                                    break;
+                                case "xyz_pendulum": {
+                                    eb.addField("Card information",
+                                            result.get(i).getType() + "\n" +
+                                                    "Rank: " + result.get(i).getLevel().toString() + "\n" +
+                                                    "Attribute: " + result.get(i).getAttribute() + "\n" +
+                                                    "Type: " + result.get(i).getRace() + "\n" +
+                                                    "Scale: " + result.get(i).getScale() + "\n" +
+                                                    "Effect: " + "\n" + result.get(i).getMonsterDesc() + "\n" +
+                                                    "Pendulum effect: " + "\n" + result.get(i).getPendDesc() + "\n" +
+                                                    "Attack: " + result.get(i).getAtk() + "\n" +
+                                                    "Defence: " + result.get(i).getDef() + "\n" + "\n" +
+                                                    "Cheapest version on cardmarket: " + "\u20ac" + result.get(i).getCardPrices().get(0).getCardmarketPrice()
+                                            , true);
+                                    Color xyzColor = new Color(29, 19, 30, 255);
+                                    eb.setColor(xyzColor);
+                                    break;
+                                }
+                                case "token": {
+                                    eb.addField("Card information",
+                                            result.get(i).getType() + "\n" +
+                                                    "Level: " + result.get(i).getLevel().toString() + "\n" +
+                                                    "Attribute: " + result.get(i).getAttribute() + "\n" +
+                                                    "Type: " + result.get(i).getRace() + "\n" +
+                                                    "Effect: " + "\n" + result.get(i).getDesc() + "\n" +
+                                                    "Attack: " + result.get(i).getAtk() + "\n" +
+                                                    "Defence: " + result.get(i).getDef() + "\n" + "\n" +
+                                                    "Cheapest version on cardmarket: " + "\u20ac" + result.get(i).getCardPrices().get(0).getCardmarketPrice()
+                                            , true);
+                                    Color xyzColor = new Color(29, 19, 30, 255);
+                                    eb.setColor(xyzColor);
+                                    break;
+                                }
                             }
                             if (result.size()== 1){
                                 ebCounter.setTitle(result.size() + " card found. " +" ["+(i+1)+"/"+result.size()+"]");
@@ -281,7 +301,13 @@ public class SlashCommandListener extends ListenerAdapter {
                     e.printStackTrace();
                 }
             }
-
+//TODO: complete deck builder listener
+        } else if (Objects.equals(event.getSubcommandName(), "deck")) {
+/**
+ *  Deck builder listener event
+ *  main command Deck
+ *  subcommand toText, show, new, alter
+ */
         }
 
 }
