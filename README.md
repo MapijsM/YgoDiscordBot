@@ -29,8 +29,8 @@ To find 'Dark Magician' cards with more than 2500 attack, use:
 
 ## Can I use this bot in my own server?
 
-[Insert information about the bot's availability and permissions here.]
+Currently the bot is not yet open for public use, I want to be able to guarantee the quality before going public with it.
 
 ## How can I improve this bot?
 
-[Provide information on how users can contribute or suggest improvements to the bot.]  
+If you are in one of the servers that is currently running the bot, you can message me with feedback and ideas to improve the bot.
